@@ -859,14 +859,7 @@
                     <span class="project-tech-item">WebAssembly</span>
                     <span class="project-tech-item">Game Design</span>
                 </div>
-                <div class="project-actions">
-                    <button onclick="openFullscreen()" class="project-btn project-btn-primary">
-                        Play Game →
-                    </button>
-                    <a href="#" class="project-btn project-btn-secondary">
-                        View Code
-                    </a>
-                </div>
+
             </div>
             <div class="project-media-container">
                 <!-- Space Shooter Game Integration -->
@@ -890,9 +883,8 @@
                 </div>
                 
                 <div class="game-controls">
-                    <button onclick="restartSpaceShooter()" class="game-btn">🔄 Restart</button>
+                    <button onclick="restartSpaceShooter()" class="game-btn">🎮 Load Game</button>
                     <button onclick="toggleGameFullscreen()" class="game-btn">⛶ Fullscreen</button>
-                    <button onclick="toggleGameMute()" class="game-btn" id="muteBtn">🔊 Sound</button>
                 </div>
             </div>
         </div>
@@ -941,6 +933,12 @@
     </div>
 
     <script>
+        // Website entry detection - runs immediately when page loads/reloads
+        console.log('🌐 Website entered! Welcome to Tirawat Saelim Portfolio');
+        console.log('📅 Page loaded at:', new Date().toLocaleString());
+        
+
+        
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -991,22 +989,26 @@
         // Game functionality
         let godotEngine = null;
         let isGameMuted = false;
+        let hasEnteredWebsite = false; // Track if user has entered the website
 
         function restartSpaceShooter() {
             // Try to restart iframe first
             const iframe = document.querySelector('#godot-game-container iframe');
             if (iframe) {
+                console.log('Restarting iframe game...');
                 iframe.src = iframe.src; // Reload iframe
                 return;
             }
             
             // Fallback: restart engine
             if (godotEngine) {
+                console.log('Restarting Godot engine...');
                 godotEngine.requestQuit();
                 setTimeout(() => {
                     startGodotGame();
                 }, 1000);
             } else {
+                console.log('Starting new game instance...');
                 startGodotGame();
             }
         }
@@ -1040,26 +1042,65 @@
         function toggleGameMute() {
             isGameMuted = !isGameMuted;
             const muteBtn = document.getElementById('muteBtn');
+            const iframe = document.querySelector('#godot-game-container iframe');
             
             if (isGameMuted) {
-                muteBtn.textContent = '🔇 Muted';
-                // Mute game audio if possible
-                if (godotEngine) {
-                    // Godot specific mute command (if available)
-                    try {
-                        godotEngine.setVolume(0);
-                    } catch (e) {
-                        console.log('Mute function not available');
+                muteBtn.innerHTML = '🔇 Muted';
+                
+                // Mute entire website
+                try {
+                    // Get all audio and video elements on the page
+                    const allAudioElements = document.querySelectorAll('audio, video');
+                    allAudioElements.forEach(element => {
+                        element.muted = true;
+                        element.volume = 0;
+                    });
+                    
+                    // Suspend Web Audio API contexts
+                    if (window.AudioContext || window.webkitAudioContext) {
+                        // Try to suspend any existing audio contexts
+                        if (window.audioContext) {
+                            window.audioContext.suspend();
+                        }
                     }
+                    
+                    // Visual feedback for game iframe
+                    if (iframe) {
+                        iframe.style.opacity = '0.7';
+                    }
+                    
+                    console.log('🔇 Website audio muted');
+                } catch (e) {
+                    console.log('Could not mute website audio:', e);
                 }
             } else {
-                muteBtn.textContent = '🔊 Sound';
-                if (godotEngine) {
-                    try {
-                        godotEngine.setVolume(1);
-                    } catch (e) {
-                        console.log('Unmute function not available');
+                muteBtn.innerHTML = '🔊 Sound';
+                
+                // Unmute entire website
+                try {
+                    // Unmute all audio and video elements
+                    const allAudioElements = document.querySelectorAll('audio, video');
+                    allAudioElements.forEach(element => {
+                        element.muted = false;
+                        element.volume = 1;
+                    });
+                    
+                    // Resume Web Audio API contexts
+                    if (window.AudioContext || window.webkitAudioContext) {
+                        // Try to resume any existing audio contexts
+                        if (window.audioContext) {
+                            window.audioContext.resume();
+                        }
                     }
+                    
+                    // Remove visual feedback for game iframe
+                    if (iframe) {
+                        iframe.style.opacity = '1';
+                    }
+                    
+                    console.log('🔊 Website audio unmuted');
+                } catch (e) {
+                    console.log('Could not unmute website audio:', e);
                 }
             }
         }
@@ -1093,7 +1134,7 @@
             iframe.style.border = 'none';
             iframe.style.borderRadius = '15px';
             iframe.style.background = '#000';
-            iframe.src = 'SpaceShooter(CompositionLearning).html'; // Your Godot HTML file
+            iframe.src = 'Game/index.html'; // Your Godot HTML file in Game folder
             
             iframe.onload = function() {
                 statusElement.style.visibility = 'hidden';
@@ -1112,7 +1153,7 @@
         function tryDirectIntegration() {
             // Fallback: Try direct Godot engine integration
             const script = document.createElement('script');
-            script.src = 'SpaceShooter(CompositionLearning).js';
+            script.src = 'Game/index.js'; // Updated path to Game folder
             
             script.onload = function() {
                 // Show canvas again
@@ -1120,8 +1161,8 @@
                 
                 const config = {
                     'canvas': document.getElementById('canvas'),
-                    'executable': 'SpaceShooter(CompositionLearning)',
-                    'mainPack': 'SpaceShooter(CompositionLearning).pck',
+                    'executable': 'index',
+                    'mainPack': 'Game/index.pck',
                     'args': [],
                     'onProgress': function(current, total) {
                         const progressInner = document.getElementById('status-progress-inner');
@@ -1160,11 +1201,11 @@
                     '<h3>Game files not found</h3>' +
                     '<p style="margin-top: 1rem;">To play the Space Shooter game, please:</p>' +
                     '<ol style="text-align: left; margin: 1rem 0; padding-left: 2rem;">' +
-                        '<li>Export your Godot project for Web</li>' +
-                        '<li>Copy all files to this portfolio folder</li>' +
+                        '<li>Make sure the Game folder contains your Godot export files</li>' +
+                        '<li>Check that index.html, index.js, index.pck, index.wasm exist in Game folder</li>' +
                         '<li>Refresh the page</li>' +
                     '</ol>' +
-                    '<p><small>Expected files: SpaceShooter(CompositionLearning).html, .js, .wasm, .pck</small></p>' +
+                    '<p><small>Expected path: Game/index.html</small></p>' +
                 '</div>';
             document.getElementById('status').style.visibility = 'visible';
         }
@@ -1209,6 +1250,14 @@
         if (gameSection) {
             gameObserver.observe(gameSection);
         }
+
+        // Listen for messages from iframe (for mute functionality)
+        window.addEventListener('message', function(event) {
+            // Handle responses from the game iframe
+            if (event.data && event.data.type === 'gameLoaded') {
+                console.log('Game loaded in iframe');
+            }
+        });
     </script>
 </body>
 </html>
