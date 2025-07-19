@@ -40,6 +40,42 @@
             margin: 0 auto;
         }
 
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .language-toggle {
+            display: flex;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 20px;
+            padding: 2px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            color: #e0e0e0;
+            cursor: pointer;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: #8b5cf6;
+        }
+
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
@@ -226,6 +262,31 @@
             font-size: 3rem;
             margin: 0 auto;
             box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        .profile-fallback {
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        /* Hide fallback text when image loads successfully */
+        .profile-img:has(.profile-photo) .profile-fallback {
+            display: none;
         }
 
         .about-text {
@@ -277,12 +338,138 @@
             font-weight: 500;
         }
 
+        /* Education & Experience Section */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .education-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(30, 30, 30, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .education-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 70% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .education-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .education-card .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .education-card h3 {
+            color: #8b5cf6;
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .education-card .institution {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+
+        .education-card .duration {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .education-card .description {
+            color: #b0b0b0;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .internship-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 146, 60, 0.1) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            animation: pulseCard 3s ease-in-out infinite;
+        }
+
+        .internship-card::before {
+            background: radial-gradient(circle at 70% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+        }
+
+        .internship-card:hover {
+            border-color: rgba(245, 158, 11, 0.4);
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.2);
+        }
+
+        .internship-card h3 {
+            color: #f59e0b;
+        }
+
+        @keyframes pulseCard {
+            0%, 100% {
+                box-shadow: 0 5px 20px rgba(245, 158, 11, 0.1);
+            }
+            50% {
+                box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
+            }
+        }
+
         /* Projects Section */
         .project-section {
-            padding: 3rem 5%;
+            padding: 4rem 5%;
             max-width: 1200px;
-            margin: 0 auto;
-            border-bottom: 1px solid #333;
+            margin: 2rem auto;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(30, 30, 30, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .project-section:nth-child(even) {
+            background: linear-gradient(135deg, rgba(22, 33, 62, 0.6) 0%, rgba(26, 26, 46, 0.8) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .project-section:nth-child(even)::before {
+            background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
         }
 
         .project-section:last-of-type {
@@ -325,6 +512,16 @@
             height: 300px;
             object-fit: cover;
             border-radius: 15px;
+        }
+
+        /* Phone resolution for CPR project video */
+        .project-video-phone {
+            width: 60%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 0 auto;
+            display: block;
         }
 
         .project-details {
@@ -424,19 +621,70 @@
         }
 
         .game-btn {
-            padding: 8px 16px;
+            padding: 12px 24px;
             background: #8b5cf6;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .game-btn:hover {
             background: #a855f7;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .game-btn.load-game {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            color: white;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+            animation: pulseGlow 2s ease-in-out infinite;
+            position: relative;
+        }
+
+        .game-btn.load-game::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .game-btn.load-game:hover::before {
+            left: 100%;
+        }
+
+        .game-btn.load-game:hover {
+            background: linear-gradient(135deg, #fbbf24 0%, #fb923c 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+            animation: none;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+                transform: scale(1.02);
+            }
         }
 
         .fullscreen-overlay {
@@ -495,8 +743,14 @@
             }
 
             .project-media-large,
-            .project-video-large {
+            .project-video-large,
+            .project-video-phone {
                 height: 250px;
+            }
+
+            .project-video-phone {
+                width: 80%;
+                height: 320px;
             }
 
             .project-iframe {
@@ -596,6 +850,15 @@
                 height: 200px;
                 font-size: 2rem;
             }
+
+            .education-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .education-card {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -603,11 +866,14 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">TS</div>
+            <div class="nav-left">
+                <div class="logo">TS</div>
+            </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
+                <li><a href="#education">Education</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -618,14 +884,15 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Tirawat Saelim</h1>
-            <p class="subtitle">Full Stack Developer & UI/UX Designer</p>
+            <p class="subtitle">Computer Science Student & Full Stack Developer</p>
             <p class="description">
-                I create beautiful, functional, and user-centered digital experiences that solve real-world problems. 
-                Passionate about clean code, innovative design, and cutting-edge technologies.
+                Currently pursuing Computer Science degree with hands-on experience in modern web technologies. 
+                Seeking internship opportunities to apply my skills in real-world projects while contributing to innovative teams. 
+                Passionate about learning, problem-solving, and creating impactful digital solutions.
             </p>
             <div class="cta-buttons">
-                <a href="#projects" class="btn btn-primary">View My Work</a>
-                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                <a href="#projects" class="btn btn-primary">View My Projects</a>
+                <a href="#contact" class="btn btn-secondary">Available for Internship</a>
             </div>
         </div>
     </section>
@@ -635,23 +902,21 @@
         <h2 class="section-title">About Me</h2>
         <div class="about-content">
             <div class="about-image">
-                <div class="profile-img">TS</div>
+                <div class="profile-img">
+                    <!-- Profile Image Placeholder - Replace with your actual photo -->
+                    <img src="Img\myProfile.jpg" alt="Tirawat Saelim Profile Photo" class="profile-photo" />
+                    <div class="profile-fallback">TS</div>
+                </div>
             </div>
             <div class="about-text">
                 <p>
-                    Hello! I'm Tirawat Saelim, a passionate full-stack developer with over 5 years of experience 
-                    creating digital solutions that make a difference. I specialize in modern web technologies 
-                    and have a keen eye for design and user experience.
+                    Hello! I'm Tirawat Saelim, a dedicated Computer Science student at Bangkok University with a passion for web development and software engineering. Currently in my 3rd year, I have gained solid foundation in programming principles and hands-on experience with modern technologies through coursework and personal projects.
                 </p>
                 <p>
-                    My journey in tech started with a curiosity about how things work, which led me to pursue 
-                    computer science and eventually specialize in web development. I love the challenge of 
-                    turning complex problems into simple, beautiful, and intuitive solutions.
+                    I'm actively seeking internship opportunities where I can apply my technical skills, learn from experienced professionals, and contribute to meaningful projects. My academic journey has equipped me with strong problem-solving abilities, attention to detail, and eagerness to tackle new challenges in a collaborative environment.
                 </p>
                 <p>
-                    When I'm not coding, you can find me exploring new technologies, contributing to open-source 
-                    projects, or enjoying outdoor activities. I believe in continuous learning and staying 
-                    up-to-date with the latest industry trends.
+                    Beyond coding, I enjoy participating in hackathons, contributing to open-source projects, and staying updated with the latest industry trends. I believe in continuous learning and am excited to bring fresh perspectives and enthusiasm to a dynamic team.
                 </p>
             </div>
         </div>
@@ -670,7 +935,6 @@
                     <span class="skill-tag">React</span>
                     <span class="skill-tag">Vue.js</span>
                     <span class="skill-tag">TypeScript</span>
-                    <span class="skill-tag">Sass</span>
                 </div>
             </div>
             <div class="skill-category">
@@ -679,9 +943,7 @@
                     <span class="skill-tag">Node.js</span>
                     <span class="skill-tag">Python</span>
                     <span class="skill-tag">Express.js</span>
-                    <span class="skill-tag">Django</span>
-                    <span class="skill-tag">MongoDB</span>
-                    <span class="skill-tag">PostgreSQL</span>
+                    <span class="skill-tag">SQL</span>
                     <span class="skill-tag">REST APIs</span>
                 </div>
             </div>
@@ -690,9 +952,6 @@
                 <div class="skill-items">
                     <span class="skill-tag">Git</span>
                     <span class="skill-tag">Docker</span>
-                    <span class="skill-tag">AWS</span>
-                    <span class="skill-tag">Webpack</span>
-                    <span class="skill-tag">Jest</span>
                     <span class="skill-tag">Figma</span>
                     <span class="skill-tag">Adobe XD</span>
                 </div>
@@ -704,9 +963,53 @@
                     <span class="skill-tag">UX Research</span>
                     <span class="skill-tag">Prototyping</span>
                     <span class="skill-tag">Wireframing</span>
-                    <span class="skill-tag">User Testing</span>
                     <span class="skill-tag">Design Systems</span>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Experience Section -->
+    <section id="education" class="section">
+        <h2 class="section-title">Education & Experience</h2>
+        <div class="education-grid">
+            <div class="education-card">
+                <div class="card-icon">🎓</div>
+                <h3>Bachelor of Computer Science</h3>
+                <p class="institution">Bangkok University</p>
+                <p class="duration">2022 - 2026 (Expected)</p>
+                <p class="description">
+                    Relevant Coursework: Data Structures & Algorithms, Web Development, Database Systems, Software Engineering, Object-Oriented Programming
+                </p>
+            </div>
+            
+            <div class="education-card">
+                <div class="card-icon">💻</div>
+                <h3>Personal Projects & Learning</h3>
+                <p class="institution">Self-Directed Learning</p>
+                <p class="duration">2023 - Present</p>
+                <p class="description">
+                    Built full-stack applications, learned modern frameworks
+                </p>
+            </div>
+
+            <div class="education-card">
+                <div class="card-icon">🏆</div>
+                <h3>Academic Achievements</h3>
+                <p class="institution">GPA: 3.92</p>
+                <p class="description">
+                    Recognition for academic excellence,  and tech-related extracurricular activities
+                </p>
+            </div>
+
+            <div class="education-card internship-card">
+                <div class="card-icon">🚀</div>
+                <h3>Seeking Internship Opportunity</h3>
+                <p class="institution">Available for Summer/Winter Internship</p>
+                <p class="duration">3-6 months</p>
+                <p class="description">
+                    Looking for hands-on experience in software development, web development, or related fields. Eager to contribute to real projects while learning from industry professionals
+                </p>
             </div>
         </div>
     </section>
@@ -726,37 +1029,26 @@
     <section class="project-section">
         <div class="project-container">
             <div class="project-media-container">
-                <!-- Replace with actual image -->
-                <img class="project-media-large" src="https://via.placeholder.com/600x300/8b5cf6/ffffff?text=E-Commerce+Platform" alt="E-Commerce Platform Screenshot" />
                 <!-- Uncomment for video placeholder -->
-                <!-- <video class="project-video-large" poster="https://via.placeholder.com/600x300?text=Video+Thumbnail" controls>
-                    <source src="path/to/your/ecommerce-demo.mp4" type="video/mp4">
+                <video class="project-video-phone" poster="Img\ARCPRScreenshot.png" controls>
+                    <source src="Video\FULLgameplay.mp4" type="video/mp4">
                     Your browser does not support the video tag.
-                </video> -->
+                </video>
             </div>
             <div class="project-details">
                 <div class="project-number">Project 01</div>
-                <h3 class="project-title">E-Commerce Platform</h3>
+                <h3 class="project-title">CPR AR Training Application</h3>
                 <p class="project-description">
-                    A comprehensive e-commerce solution built with modern technologies. Features include 
-                    real-time inventory management, secure payment processing with Stripe integration, 
-                    responsive design, and an intuitive admin dashboard. Built for scalability and performance 
-                    with a focus on user experience.
+                    An innovative Augmented Reality application for CPR (Cardiopulmonary Resuscitation) training built with Unity. 
+                    Features interactive 3D models, real-time feedback, step-by-step guidance, and immersive learning experience. 
+                    The app uses AR technology to overlay virtual CPR mannequins in real-world environments, making medical training 
+                    more accessible and engaging for students and professionals.
                 </p>
                 <div class="project-tech-stack">
-                    <span class="project-tech-item">React</span>
-                    <span class="project-tech-item">Node.js</span>
-                    <span class="project-tech-item">MongoDB</span>
-                    <span class="project-tech-item">Stripe</span>
-                    <span class="project-tech-item">Express.js</span>
-                </div>
-                <div class="project-actions">
-                    <a href="#" class="project-btn project-btn-primary">
-                        Live Demo →
-                    </a>
-                    <a href="#" class="project-btn project-btn-secondary">
-                        View Code
-                    </a>
+                    <span class="project-tech-item">Unity 3D</span>
+                    <span class="project-tech-item">ARCore/ARKit</span>
+                    <span class="project-tech-item">C#</span>
+                    <span class="project-tech-item">AR Foundation</span>
                 </div>
             </div>
         </div>
@@ -767,84 +1059,37 @@
         <div class="project-container reverse">
             <div class="project-details">
                 <div class="project-number">Project 02</div>
-                <h3 class="project-title">Task Management App</h3>
+                <h3 class="project-title">SceneSnap - Movie Management Platform</h3>
                 <p class="project-description">
-                    A collaborative task management application designed for teams. Features real-time updates, 
-                    drag-and-drop functionality, team collaboration tools, and comprehensive project tracking. 
-                    Built with modern frameworks to ensure smooth performance and excellent user experience.
+                    A comprehensive movie management and ticket booking platform built for cinema enthusiasts. 
+                    Features include movie discovery, showtimes management, seat selection, secure payment processing, 
+                    and user account management. The platform provides an intuitive interface for both customers to book tickets 
+                    and administrators to manage movie schedules, pricing, and theater operations efficiently.
                 </p>
                 <div class="project-tech-stack">
-                    <span class="project-tech-item">Vue.js</span>
+                    <span class="project-tech-item">React</span>
+                    <span class="project-tech-item">Node.js</span>
                     <span class="project-tech-item">Express.js</span>
-                    <span class="project-tech-item">Socket.io</span>
-                    <span class="project-tech-item">PostgreSQL</span>
-                    <span class="project-tech-item">JWT</span>
-                </div>
-                <div class="project-actions">
-                    <a href="#" class="project-btn project-btn-primary">
-                        Live Demo →
-                    </a>
-                    <a href="#" class="project-btn project-btn-secondary">
-                        View Code
-                    </a>
+                    <span class="project-tech-item">SQL</span>
                 </div>
             </div>
             <div class="project-media-container">
                 <!-- Replace with actual video -->
-                <video class="project-video-large" poster="https://via.placeholder.com/600x300/a855f7/ffffff?text=Task+App+Demo" controls>
-                    <source src="path/to/your/task-app-demo.mp4" type="video/mp4">
+                <video class="project-video-large" poster="Img\SceneSnapScreenshot.webp" controls>
+                    <source src="Video\SceneSnap.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <!-- Fallback image if video not available -->
-                <!-- <img class="project-media-large" src="https://via.placeholder.com/600x300?text=Task+Management+App" alt="Task Management App Screenshot" /> -->
+            </div>
             </div>
         </div>
     </section>
 
-    <!-- Project 3: Analytics Dashboard -->
-    <section class="project-section">
-        <div class="project-container">
-            <div class="project-media-container">
-                <!-- Replace with actual image -->
-                <img class="project-media-large" src="https://via.placeholder.com/600x300/6366f1/ffffff?text=Analytics+Dashboard" alt="Analytics Dashboard Screenshot" />
-                <!-- Uncomment for video placeholder -->
-                <!-- <video class="project-video-large" poster="https://via.placeholder.com/600x300?text=Dashboard+Demo" controls>
-                    <source src="path/to/your/dashboard-demo.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video> -->
-            </div>
-            <div class="project-details">
-                <div class="project-number">Project 03</div>
-                <h3 class="project-title">Analytics Dashboard</h3>
-                <p class="project-description">
-                    A comprehensive analytics dashboard with interactive charts and real-time data visualization. 
-                    Features customizable reporting, data filtering, export capabilities, and responsive design. 
-                    Built with modern data visualization libraries for optimal performance and user experience.
-                </p>
-                <div class="project-tech-stack">
-                    <span class="project-tech-item">React</span>
-                    <span class="project-tech-item">D3.js</span>
-                    <span class="project-tech-item">Python</span>
-                    <span class="project-tech-item">FastAPI</span>
-                    <span class="project-tech-item">Chart.js</span>
-                </div>
-                <div class="project-actions">
-                    <a href="#" class="project-btn project-btn-primary">
-                        Live Demo →
-                    </a>
-                    <a href="#" class="project-btn project-btn-secondary">
-                        View Code
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Project 4: Interactive Game -->
+    <!-- Project 3: Interactive Game -->
     <section class="project-section">
         <div class="project-container reverse">
             <div class="project-details">
-                <div class="project-number">Project 04</div>
+                <div class="project-number">Project 03</div>
                 <h3 class="project-title">Space Shooter Game</h3>
                 <p class="project-description">
                     An exciting space shooter game built with Godot Engine. Features fast-paced gameplay, 
@@ -883,8 +1128,7 @@
                 </div>
                 
                 <div class="game-controls">
-                    <button onclick="restartSpaceShooter()" class="game-btn">🎮 Load Game</button>
-                    <button onclick="toggleGameFullscreen()" class="game-btn">⛶ Fullscreen</button>
+                    <button onclick="restartSpaceShooter()" class="game-btn load-game">🎮 Load Game</button>
                 </div>
             </div>
         </div>
@@ -893,21 +1137,22 @@
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="section">
-            <h2 class="section-title" style="color: white;">Get In Touch</h2>
+            <h2 class="section-title" style="color: white;">Let's Connect - Internship Available</h2>
             <div class="contact-content">
-                <p>I'm always interested in new opportunities and exciting projects. Whether you're a company looking to hire, or you're a fellow developer who wants to collaborate, I'd love to hear from you!</p>
+                <p>
+                    I'm actively seeking internship opportunities to gain hands-on experience and contribute to innovative projects. 
+                    As a dedicated Computer Science student, I'm eager to learn from industry professionals and apply my skills in a real-world environment. 
+                    Feel free to reach out if you have any opportunities or would like to discuss my background!
+                </p>
                 <div class="contact-info">
                     <div class="contact-item">
                         <h4>Email</h4>
-                        <a href="mailto:tirawat.saelim@example.com">tirawat.saelim@example.com</a>
+                        <a href="mailto:tirawat.sael@bumail.net">tirawat.sael@bumail.net</a>
                     </div>
-                    <div class="contact-item">
-                        <h4>LinkedIn</h4>
-                        <a href="#" target="_blank">linkedin.com/in/tirawatsaelim</a>
-                    </div>
+
                     <div class="contact-item">
                         <h4>GitHub</h4>
-                        <a href="#" target="_blank">github.com/tirawatsaelim</a>
+                        <a href="https://github.com/tirawatSael" target="_blank">github.com/tirawatsaelim</a>
                     </div>
                 </div>
             </div>
@@ -936,6 +1181,34 @@
         // Website entry detection - runs immediately when page loads/reloads
         console.log('🌐 Website entered! Welcome to Tirawat Saelim Portfolio');
         console.log('📅 Page loaded at:', new Date().toLocaleString());
+        
+        // Profile image handling
+        function handleProfileImage() {
+            const profilePhoto = document.querySelector('.profile-photo');
+            const profileFallback = document.querySelector('.profile-fallback');
+            
+            if (profilePhoto) {
+                profilePhoto.addEventListener('load', function() {
+                    // Image loaded successfully, hide fallback
+                    if (profileFallback) {
+                        profileFallback.style.display = 'none';
+                    }
+                    console.log('👤 Profile image loaded successfully');
+                });
+                
+                profilePhoto.addEventListener('error', function() {
+                    // Image failed to load, show fallback
+                    profilePhoto.style.display = 'none';
+                    if (profileFallback) {
+                        profileFallback.style.display = 'block';
+                    }
+                    console.log('👤 Profile image failed to load, showing fallback');
+                });
+            }
+        }
+
+        // Initialize profile image handling
+        handleProfileImage();
         
 
         
@@ -992,6 +1265,8 @@
         let hasEnteredWebsite = false; // Track if user has entered the website
 
         function restartSpaceShooter() {
+            console.log('🎮 Load Game button clicked!');
+            
             // Try to restart iframe first
             const iframe = document.querySelector('#godot-game-container iframe');
             if (iframe) {
@@ -1010,6 +1285,19 @@
             } else {
                 console.log('Starting new game instance...');
                 startGodotGame();
+            }
+            
+            // Update button state
+            const loadButton = document.querySelector('.game-btn.load-game');
+            if (loadButton) {
+                loadButton.innerHTML = '⏳ Loading...';
+                loadButton.disabled = true;
+                
+                // Reset button after a delay
+                setTimeout(() => {
+                    loadButton.innerHTML = '🎮 Load Game';
+                    loadButton.disabled = false;
+                }, 3000);
             }
         }
 
@@ -1123,6 +1411,7 @@
             const gameContainer = document.getElementById('godot-game-container');
             const canvas = document.getElementById('canvas');
             const statusElement = document.getElementById('status');
+            const loadButton = document.querySelector('.game-btn.load-game');
             
             // Hide canvas and show iframe
             canvas.style.display = 'none';
@@ -1139,6 +1428,19 @@
             iframe.onload = function() {
                 statusElement.style.visibility = 'hidden';
                 console.log('Space Shooter loaded successfully via iframe!');
+                
+                // Update button to show success
+                if (loadButton) {
+                    loadButton.innerHTML = '🎮 Game Loaded!';
+                    loadButton.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                    loadButton.disabled = false;
+                    
+                    // Change button to restart after 2 seconds
+                    setTimeout(() => {
+                        loadButton.innerHTML = '🔄 Restart Game';
+                        loadButton.style.background = 'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)';
+                    }, 2000);
+                }
             };
             
             iframe.onerror = function() {
@@ -1239,10 +1541,28 @@
         const gameSection = document.querySelector('.project-section:last-of-type');
         const gameObserver = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
-                if (entry.isIntersecting && !godotEngine) {
-                    setTimeout(() => {
-                        startGodotGame();
-                    }, 500); // Small delay for better UX
+                if (entry.isIntersecting) {
+                    // Check if game hasn't been loaded yet
+                    const iframe = document.querySelector('#godot-game-container iframe');
+                    if (!iframe && !godotEngine) {
+                        console.log('🎮 Game section visible - auto-loading game...');
+                        setTimeout(() => {
+                            startGodotGame();
+                        }, 500); // Small delay for better UX
+                    }
+                    
+                    // Make the load game button more prominent when visible
+                    const loadButton = document.querySelector('.game-btn.load-game');
+                    if (loadButton && !iframe) {
+                        loadButton.style.animation = 'pulseGlow 2s ease-in-out infinite';
+                        loadButton.classList.add('visible');
+                    }
+                } else {
+                    // Reduce button animation when not visible
+                    const loadButton = document.querySelector('.game-btn.load-game');
+                    if (loadButton) {
+                        loadButton.classList.remove('visible');
+                    }
                 }
             });
         }, { threshold: 0.3 });
